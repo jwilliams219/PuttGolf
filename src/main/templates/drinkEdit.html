@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Drink Edit">
+  <meta name="author" content="8th Wonder">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Drinks</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+
+{% include 'navBar.html' %}
+
+<div class="left column">
+
+  <h1>Edit Drinks</h1>
+
+  <h2>Add New Drink</h2>
+  <form action="{% url 'editDrinks' %}" method="POST" style="font-size: 1.5vw;">
+    {% csrf_token %}
+    {{ addDrinkForm.as_p }}
+    <br><input type="submit" value="Confirm" class="accountButton">
+  </form><br>
+
+  <h2>Delete Drink</h2>
+  <form action="{% url 'editDrinks' %}" method="POST" style="font-size: 1.5vw;">{% csrf_token %}
+    <label for="deleteDrink">Drink: </label><select id="deleteDrink" name="deleteDrink">
+      {% if drinkList %}
+        {% for drink in drinkList %}
+        <option value="{{ drink.name }}">{{ drink.name }}</option>
+        {% endfor %}
+      {% endif %}
+    </select>
+    <br><br><input type="submit" value="Confirm" class="accountButton">
+  </form><br>
+
+  <h2>Edit Current Drink</h2>
+  <form action="{% url 'editDrinks' %}" method="POST" style="font-size: 1.5vw;">{% csrf_token %}
+    <label for="drink">Drink: </label><select id="drink" name="drink">
+      {% if drinkList %}
+        {% for drink in drinkList %}
+        <option value="{{ drink.name }}">{{ drink.name }}</option>
+        {% endfor %}
+      {% endif %}
+    </select>
+    <br><br><label for="name">New Name: </label><input id="name" type="text" name="name" value="" required>
+    <br><br><label for="price">New Price: </label><input id="price" type="text" name="price" value="" required>
+    <br><br><lable for="instructions">New Instructions: </lable><input id="instructions" type="text" name="instructions" value="" required>
+    <br><br><input type="submit" value="Confirm" class="accountButton">
+  </form>
+
+</div>
+
+
+    <div class="column right">
+    <h2>Available Drinks</h2>
+    {% if drinkList %}
+    {% for drink in drinkList %}
+      <div class="orderButton">
+      <h3>{{ drink.name }}</h3>
+      <p> - ${{ drink.price }}</p>
+      <p> - {{ drink.instructions }}</p>
+      </div>
+    {% endfor %}
+    {% else %}
+      <p>No Drinks Yet Created</p>
+    {% endif %}
+    </div>
+
+</body>
+</html>

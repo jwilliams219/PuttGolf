@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Main Page">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+    {% include 'navBar.html' %}
+
+    <div class="column left">
+        <div class="communityPosts">
+            <h2>Community Posts</h2>
+            {% if user.user_type == 4 %}
+                {% for m in manager_list %}
+                    <form action="" method="post"> {% csrf_token %}
+                        <textarea name="communityPosts" rows="7">{{m.communityPosts}}</textarea>
+                        <input type="submit" value="Submit" class="accountButton">
+                    </form>
+                {% endfor %}
+            {% else%}
+                {% for m in manager_list %}
+                    {{m.communityPosts}}
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+
+
+
+    <div class="column right">
+        {% if top_score_list_last_tourney %}
+            <h2>Top Scores from Latest Tournament</h2>
+            {% for score in top_score_list_last_tourney %}
+                <p>{{score.player.user.first_name}} {{score.player.user.last_name}}: {{score.score}}/{{score.tournament.numOfHoles}}</p>
+            {% endfor %}
+        {% else %}
+            <h2>No Recent Tournaments</h2>
+        {% endif %}
+
+    </div>
+</body>

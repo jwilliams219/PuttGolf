@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Main Page">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+
+{% include 'navBar.html' %}
+
+
+<div class="column left">
+    <h1 style="text-align:center;"> Upcoming Tournaments</h1>
+{% if tournaments_list %}
+<div>
+    {% for t in tournaments_list %}
+    <a href="{% url 'tournamentInfo' t.name %}">
+        <button class="eventButton">
+            <h2>{{t.name}}</h2>
+            <h3>{{t.date}}: {{t.startTime}} to {{t.endTime}}</h3>
+        </button>
+    </a>
+<br>
+    {% endfor %}
+</div>
+{% else %}
+<p>There are no upcoming tournaments</p>
+{% endif %}
+</div>
+
+
+<div class="column right">
+    <div class="communityPosts">
+    <h2>Community Posts</h2><br>
+        {% if user.user_type == 4 %}
+            {% for m in manager_list %}
+                {% if m == user.manager %}
+                <form action="" method="post"> {% csrf_token %}
+                    <textarea name="communityPosts" rows="7">{{m.communityPosts}}</textarea>
+                    <input type="submit" value="Submit" class="eventButton">
+                </form>
+                {% endif %}
+            {% endfor %}
+        {% else%}
+            {% for m in manager_list %}
+                {{m.communityPosts}}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

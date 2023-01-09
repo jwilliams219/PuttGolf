@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Account Creation">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+
+<body>
+
+    {% include 'navBar.html' %}
+    <h2 class="left column"> {{ user.username }}'s Profile</h2>
+    <div class="left column">
+        <h3>Account Information</h3>
+        <h4>General Info</h4>
+        <p><b>User Type:</b> {{ user.get_user_type_display }} <br>
+            <b>Username:</b> {{ user.username }} <br>
+            <b>Phone Number:</b> {{ user.phone_number }} <br>
+            <b>Email:</b> {{ user.email }} <br>
+            <b>Date Joined:</b> {{ user.date_joined }} <br>
+            <b>Account Balance:</b> ${{ balance|floatformat:2 }} <br>
+            {% if user.user_type == 4 %}
+            <h4>Manager Info</h4>
+                <b>Years worked:</b> {{ user.manager.yearsWorked }} <br>
+                <b>Most Money Held:</b> {{ user.manager.mostMoneyHeld }} <br>
+                <b>Drinks sold:</b> {{ user.manager.mostMoneyHeld }} <br>
+                <b>Total Tournaments made:</b> {{ user.manager.totalTournamentsMade }} <br>
+            {% endif %}
+            {% if user.user_type == 3 %}
+            <h4>Drinkmeister Employee Info</h4>
+                <b>Employee ID:</b> {{ user.drinkmeister.employeeID }} <br>
+            {% endif %}
+            {% if user.user_type == 2 %}
+            <h4>Sponsor Info</h4>
+                <b>Company Name:</b> {{ user.sponsor.companyName }} <br>
+            {% endif %}
+
+        </p>
+
+    </div>
+
+    <div class="right column">
+        <a href="{% url 'bank' %}">
+        <button onclick="location.href='bank'" class="eventButton">
+        <h2>Add Money to Account</h2>
+        </button>
+        </a>
+
+        {% if user.user_type == 4 %}
+        <h3>Other options</h3>
+        {% include "manager.html" %}
+    {% endif %}
+    {% if user.user_type == 2 %}
+        <h3>Other options</h3>
+        {% include "sponsor.html" %}
+    {% endif %}
+        {% if user.user_type == 3 %}
+        <h3>Other options</h3>
+        <br>
+    <a href="{% url 'drinkMeister' %}">
+        <button onclick="location.href='drinkMeister'"  class="eventButton">
+        <h2>Serve Drinks</h2>
+        </button>
+    </a>
+    {% endif %}
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Order Confirmation">
+  <meta name="author" content="8th Wonder">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+
+{% include 'navBar.html' %}
+
+
+
+<div class="left column">
+
+{% if success %}
+  <h1>
+    YAY!!!
+
+    Your Order Has been Sent
+  </h1>
+{% elif not success %}
+  <h1>
+    Insufficient funds in your Account.
+
+    Your Order Has NOT been Sent.
+  </h1>
+
+  <a href="{% url 'account' %}"><input type="submit" value="Check Account" class="accountButton"></a><br>
+
+{% endif %}
+
+
+  <a href="{% url 'drinks' %}"><input type="submit" value="New Order" class="accountButton"></a>
+
+</div>
+
+</body>
+</html>

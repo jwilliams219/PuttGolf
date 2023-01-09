@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verification Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+{% include 'navBar.html' %}
+
+<div class="left column">
+<h2>Sponsors</h2>
+{% if sponsors_list %}
+    <ul>
+        {% for sponsor in sponsors_list %}
+            <p>{{ sponsor.user.first_name}} {{sponsor.user.last_name}} from the {{ sponsor.companyName}} company</p>
+            <button class="accountButton">Ban</button>
+            <button class="accountButton">Verify</button>
+            <button class="accountButton">Force Player Status</button>
+        {% endfor %}
+    </ul>
+{% endif %}
+<h2>Drinkmeisters</h2>
+{% if drinkmeisters_list %}
+    <ul>
+        {% for drinkmeister in drinkmeisters_list %}
+            <div>
+                <p>{{ drinkmeister.user.first_name}} {{drinkmeister.user.last_name}} (Employee ID: {{ drinkmeister.employeeID}})</p>
+                <button class="accountButton">Ban</button>
+                <button class="accountButton">Verify</button>
+                <button class="accountButton">Force Player Status</button>
+
+            </div>
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
+</body>
+</html>

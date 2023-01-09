@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Tournament">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+
+<body>
+
+{% include 'navBar.html' %}
+
+<div class="left column">
+    <h2>Tournament: {{ tournament.name }}</h2>
+    {% if tplayer %}
+        <form action="" method="post"> {% csrf_token %}
+            <h2>Current Hole</h2>
+            <select name="hole" id="holes">
+                {% for i in holes %}
+                    {% if i.holeNumber == next_hole %}
+                        <option value="{{i}}" selected>{{i}}</option>
+                    {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <h2>Enter Score:</h2>
+            <input type="submit" name="add_1" value="+1"/>
+            <input type="submit" name="add_2" value="+2"/>
+            <input type="submit" name="add_3" value="+3"/>
+            <input type="submit" name="add_4" value="+4"/>
+            <input type="submit" name="add_5" value="+5"/>
+        </form>
+    {% else %}
+        <form action="" method="post"> {% csrf_token %}
+            <input type="submit" name="join" value="Join Tournament"/>
+        </form>
+    {% endif %}
+
+
+</div>
+<div class="right column">
+    {% if tplayer %}
+        Current Total:
+        <p>{{total}}</p>
+        <table border="black">
+            <tr>
+                <td>Hole</td>
+                <td>Par</td>
+                <td>Score</td>
+            </tr>
+            {% for hole in holes %}
+                <tr>
+                    <td>{{hole}}</td>
+                    <td>{{hole.par}}</td>
+                    {% for s in score_list %}
+                    {% if s.hole == hole %}
+                    <td>{{s.score}}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+
+</body>
+</html>

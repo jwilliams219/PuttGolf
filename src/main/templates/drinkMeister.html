@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Main Page">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+
+{% include 'navBar.html' %}
+
+
+<div class="left column" id="#orderNumber">
+
+    <form class="right" style="width: 80%" action="{% url 'drinkMeister' %}" method="POST">{% csrf_token %}
+        {% if orderList %}
+            <select id="order" name="order" style="font-size: 1.5vw;">
+            {% for order in orderList %}
+                <option value="{{ order.id }}">{{ order.user }} - {{ order.drink.name }}</option>
+            {% endfor %}
+            </select>
+                <a><input type="submit" value="Deliver and Finish Order" class="orderButton"></a>
+            </form>
+        {% endif %}
+
+    <h1>Current Orders</h1>
+
+    {% if orderList %}
+    {% for order in orderList %}
+    <div class="orderdiv">
+        <p></p>
+        <div id="{{ order.user }}" class="orderButton">Order From: {{ order.user }} </div>
+        <div class="orderButton">Drink: {{ order.drink.name }}</div>
+        <div class="orderButton">Instructions: {{ order.specificInstructions }}</div>
+        <div class="orderButton">Time Ordered: {{ order.timeOrdered }}</div>
+        <div class="orderButton">Deliver to Hole: {{ order.location }}</div>
+    </div>
+
+
+    {% endfor %}
+    {% else %}
+        <p></p>
+        <h3>No Current Orders</h3>
+    {% endif %}
+</div>
+
+
+    <div class="column right">
+    <h2>Available Drinks</h2>
+    {% if drinkList %}
+    {% for drink in drinkList %}
+      <div class="orderButton">
+      <h3>{{ drink.name }}</h3>
+      <p> - ${{ drink.price }}</p>
+      <p> - {{ drink.instructions }}</p>
+      </div>
+    {% endfor %}
+    {% else %}
+      <p>No Drinks Yet Created</p>
+    {% endif %}
+    </div>
+
+</body>
+</html>

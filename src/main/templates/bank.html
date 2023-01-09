@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Bank Page">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+    {% include 'navBar.html' %}
+
+    <div class="column left">
+
+        <div class="bank">
+            Current Balance: ${{ current_balance|floatformat:2 }}
+            <br>
+            <button onclick="revealTransfer()" class="accountButton" style="background: #D68C45;">Transfer</button>
+        </div>
+
+        <script>
+            function revealTransfer() {
+                let x =document.getElementById("transfer-reveal")
+                x.style.display = x.style.display === "none" ? "block" : "none";
+                x = document.getElementById("transfer-form")
+                x.style.display = x.style.display === "none" ? "block" : "none";
+            }
+        </script>
+
+        <form action="" method="post" id="transfer-form" style="display:none"> {% csrf_token %}
+            Transfer Amount<br>
+            $<input name="transAmount" id="transAmount" type="number" max="1000" min="0.01" step="0.01" placeholder='0.00' required><br>
+            <label for="destAccount">Destination Account(Adds money to your account if no destination selected): </label><input name="destAccount" id="destAccount" type="text"><br>
+            <input type="submit" value="Submit" class="accountButton"> <button onclick="revealTransfer()" id="transfer-reveal">Cancel</button>
+        </form>
+
+    </div>
+
+
+    <div class="right column">
+        Recent Transfers:
+        {% for t in transactions %}
+            <br>${{ t.name }} {{ t.amount }}
+        {% empty %}
+            <br>{{ t.name }} {{ t.amount }}
+            No Transfers
+        {% endfor %}
+    </div>
+
+
+</body>

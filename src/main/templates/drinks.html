@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Drinks">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drinks</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+
+<body>
+
+    {% include 'navBar.html' %}
+
+
+<div class="column left">
+
+    <h2>Drinks Menu</h2>
+
+    <h3>New Order: </h3>
+      <form action="{% url 'drinks' %}" method="POST">{% csrf_token %}
+        <label for="newDrink">Drink: </label><select id="newDrink" name="newDrink" style="font-size: 1.5vw;">
+            {% for drink in drinkList %}
+              <option value="{{ drink.name }}">{{ drink.name }}</option>
+            {% endfor %}
+        </select>
+          <br><br>
+          <lable for="location">Delivery Location: </lable><select id="location" name="location"  style="font-size: 1.5vw;">
+              {% if holeList %}
+              {% for hole in holeList %}
+                <option value="{{ hole.holeNumber }}">{{ hole.holeNumber }}</option>
+              {% endfor %}
+              {% else %}
+              {'n' : range(1, 10) }
+              {% for i in n %}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+              {% endif %}
+          </select>
+          <br><br>
+          <lable for="instructions">Specific Instructions: </lable><input id="instructions" type="text" name="instructions" value="" style="font-size: 1.5vw;">
+          <br><br>
+        <input type="submit" value="Confirm Order" class="accountButton" style="font-size: 2vw; margin-left:20%;">
+      </form>
+
+    {% if orders != null %}
+    {% for order in orders %}
+        {% if order.user.username == user.username %}
+            <div style="background: #FFC9B9;">
+            <h3>Waiting for Order: </h3>
+            <ul>
+                <li>Drink: {{ order.drink.name }}</li>
+                <li>Instructions: {{ order.specificInstructions }}</li>
+                <li>Time Ordered: {{ order.timeOrdered }}</li>
+                <li>Deliver to Hole: {{ order.location }}</li>
+            </ul>
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+
+</div>
+
+    <div class="column right">
+    <h2>Available Drinks</h2>
+    {% if drinkList %}
+    {% for drink in drinkList %}
+      <div class="orderButton">
+      <h3>{{ drink.name }}</h3>
+      <p> - ${{ drink.price }}</p>
+      <p> - {{ drink.instructions }}</p>
+      </div>
+    {% endfor %}
+    {% else %}
+      <p>No Drinks Yet Created</p>
+    {% endif %}
+    </div>
+
+  <!--
+  <h2>Menu</h2>
+    <button>Nuka Cola</button> <p></p>
+    <button>Nuka Cola Quantum</button> <p></p>
+    <button>Atomic Shake</button><p></p>
+    <button>Sunset Sarsparilla</button><p></p>
+    <button>Bioluminescent Fluid</button><p></p>
+    <button>Radaway</button><p></p>
+    <button>Super Stimpack</button><p></p>
+    <button>Dixon's Jet</button><p></p>
+--->
+
+
+</body>
+</html>

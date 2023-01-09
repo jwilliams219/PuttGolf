@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Account Creation">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+
+<body>
+
+{% include 'navBar.html' %}
+
+<div>
+    {% if error_message %}
+    <h2> {{ error_message }}</h2>
+    {% endif %}
+
+</div>
+<div class="leftcolumn">
+    <h2>Create a new Account</h2>
+
+    <form action ="{% url 'createAccount' %}" method="post"> {% csrf_token %}
+        <div>
+        <label for = "email">Email </label><input required = "required" type="email" name="email" id="email" value=""> 
+        <br>
+        <label for = "username">Username </label><input type="text" required = "required"  name="username" id="username" value="">
+        <br>
+        <label for = "password">Password </label><input type="password" required = "required"  name="password" id="password" value="">
+        <br>
+        <label for = "firstName">First Name </label><input type="text" required = "required"  name="firstName" id="firstName" value="">
+        <br>
+        <label for = "lastName">Last Name </label><input type="text" required = "required" name="lastName" id="lastName" value="">
+        <br>
+        <label for = "phoneNumber">Phone Number </label><input type="number" name="phoneNumber" id="phoneNumber" value="">
+        <br>
+        <label for = "companyName">Company Name </label><input type="text" name="companyName" id="companyName" value="">
+        <br>
+        <label for="userType" >User Type </label><select name="userType" id="userType">
+            <option value="1" >Player</option>
+            <option value="4">Manager</option>
+            <option value="2">Sponsor</option>
+            <option value="3">Drinkmeister</option>
+        </select>
+
+        <br>
+        </div>
+        <button type="submit" value="Create New Account" class="accountButton">Create Account</button>
+    </form>
+    </div>
+    <br> <br>
+    <a href="{% url 'account' %}"><input type="submit" value="Already Have an Account?" class="accountButton"></a>
+
+</body>
+</html>

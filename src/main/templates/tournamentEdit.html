@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Tournament">
+    <meta name="author" content="8th Wonder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+
+<body>
+
+{% include 'navBar.html' %}
+
+<div class="left column">
+    <h2>Tournament: {{ tournament.name }}</h2>
+    <form action="" method="post"> {% csrf_token %}
+        {{tournament.startTime}}{{tournament.endTime}}{{tournament.date}}
+        <label for="tournamentName">Tournament Name:</label><input type="text" name="tourneyName" id="tournamentName" value={{tournament.name}}/><br>
+        <label for="startTime">Start:</label><input type="time" name="startTime" id="startTime" value={{tournament.startTime}}/><br>
+        <label for="endTime">End:</label><input type="time" name="endTime" id="endTime" value={{tournament.endTime}}/><br>
+        <label for="date">Date:</label><input type="date" name="date" id="date" value={{tournament.date}}/><br>
+
+        <hr>
+        <h2>Holes:</h2>
+        {% for i in holes %}
+            {% if i in tournamentHoles %}
+            <label for="{{i}}">Hole {{i}}:</label><input type="checkbox" name="{{i}}" id="{{i}}" checked/><br>
+            {% else %}
+            <label for="{{i}}">Hole {{i}}:</label><input type="checkbox" name="{{i}}" id="{{i}}"/><br>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" name="submit" value="submit"/>
+    </form>
+
+
+</div>
+<div class="right column">
+    <h2>Players</h2>
+    {% for player in tourney.players %}
+    <p>Player {{player.first_name}} {{player.last_name}}</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>

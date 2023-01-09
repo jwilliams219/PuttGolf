@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Order Confirmation">
+  <meta name="author" content="8th Wonder">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sponsor</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" media="screen and (max-width: 1040px)" href="{% static 'smallscreen.css' %}">
+</head>
+<body>
+
+
+
+        <h2 style="margin-top: 0%;">Sponsor New Tournament</h2>
+        <p>Check for available day.</p>
+        <form action="" method="post"> {% csrf_token %}
+            <label for="date"></label><input type="date" name="date" id="date" value="" class="eventButton" required>
+            <br>
+            <input id="tournamentName" name="tournamentName" type="text" placeholder="Enter Tournament Name" class="eventButton" required>
+            <br>
+            <input type="submit" value="Sponsor Tournament - $500" class="eventButton"/>
+        </form>
+
+    <p></p>
+    <a href="{% url 'events' %}"><input type="submit" value="See Events" class="eventButton"></a>
+

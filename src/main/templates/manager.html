@@ -1,0 +1,25 @@
+<div class="managerOptions">
+
+    <a href="{% url 'verification' %}">
+        <button class="eventButton">
+        <h2>Verify Users</h2>
+        </button>
+    </a>
+<br>
+    <a href="{% url 'events' %}">
+        <button class="eventButton">
+        <h2>Edit Tournaments</h2>
+        </button>
+    </a>
+<br>
+    <a href="{% url 'editDrinks' %}">
+        <button onclick="location.href='drinks'" class="eventButton">
+        <h2>Edit Drinks</h2>
+        </button>
+    </a>
+    <a href="{% url 'addHoles' %}">
+        <button class="eventButton">
+        <h2>Add Holes</h2>
+        </button>
+    </a>
+</div>
