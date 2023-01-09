@@ -1,4 +1,4 @@
-# 8th-Wonder
+# Putt Putt Golf Web App
 
 ## Organization and name scheme for the workspace
 	8th-Wonder was hired to create a web application for a Putt Putt Golf tournament.
@@ -31,7 +31,7 @@
 	Instructions for local Server:
 
 	Clone the repository in git bash
-	$ git clone https://github.com/PokeGon/8th-Wonder.git
+	$ git clone https://github.com/jwilliams219/PuttGolf.git
     
     Inside cloned repository "src/" use the command
     $ python manage.py runsever
@@ -41,7 +41,6 @@
 
     Put that address into your search bar and run and you should be on the site!
 
-	To access the live site, enter IP address into browser: 52.41.103.175
 
 ## Unit testing instructions
 	Unit tests will cover all use cases laid out in the use case diagrams. They will be found in a designated 
