@@ -1,5 +1,7 @@
 # Putt Putt Golf Web App
 
+-Cloned from team project at https://github.com/PokeGon/8th-Wonder/
+
 ## Organization and name scheme for the workspace
 	8th-Wonder was hired to create a web application for a Putt Putt Golf tournament.
 	The 8th-Wonder Putt Putt Golf web app will be stored in this repository.
